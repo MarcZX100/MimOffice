@@ -1,16 +1,18 @@
-## Calligra Suite
+# MimOffice
 
-Calligra Suite is a collection of office applications linked together by a
-common base. This common base assures that all office application can
-work together and also share a common look and feel.
+MimOffice is an office suite — Words, Sheets, Stage, and Karbon — built by
+XI14 as the office-suite sibling of [MimOS](https://mimoslinux.org).
 
-Calligra Suite is free software, mostly under LGPL 2+ but also under the GPL.
-See COPYING and COPYING.LIB for the details. See also copyright and
-licensing notices in individual files.
+MimOffice is a rebranded, actively-synced fork of the [KDE Calligra
+Suite](https://invent.kde.org/office/calligra). We track Calligra's
+stable release branches and periodically merge upstream fixes and
+features; MimOffice's own changes are limited to branding, packaging,
+and distribution — the application code itself comes from Calligra. See
+[NOTICE](NOTICE) for the full attribution and license details, and
+[TRADEMARKS.md](TRADEMARKS.md) for how the MimOffice name and MIMI mascot
+relate to the source code license.
 
 ## Contents
-
-The applications currently included in Calligra Suite (version 2.1) are:
 
 Office productivity:
 
@@ -20,38 +22,43 @@ Office productivity:
 
 Graphics:
 
-- **Karbon:** Vector graphics 
+- **Karbon:** Vector graphics
 
-Advanced plugins:
-
-- **Chart:** Graphic data visualization
-- **KFormula:** Mathematical formulas
-
-More information can be found at https://calligra.org
-
+MimOffice ships a scoped subset of upstream Calligra (Words, Sheets,
+Stage, Karbon) rather than the full upstream application set; see
+`CMakePresets.json` and `CalligraProducts.cmake`.
 
 ## Building and running
 
-Calligra Suite is based on the [KDE Frameworks](https://develop.kde.org/products/frameworks) which are
-needed to run Calligra Suite. Note that you don't have to actually run
-Plasma Desktop in order to use Calligra Suite. Calligra Suite works fine
-on any desktop or platform.
+MimOffice is built on the [KDE Frameworks](https://develop.kde.org/products/frameworks),
+same as upstream Calligra — you don't need to be running Plasma Desktop
+to use it, it works on any desktop or platform.
 
-For importing some external file formats or other plugins, you may
-also need some other dependencies.  For more details on how to build
-Calligra Suite from the sources, see:
+```sh
+cmake --preset mimoffice
+cmake --build --preset mimoffice
+```
 
-https://community.kde.org/Calligra/Building
+This configures a build scoped to `PRODUCTSET="WORDS;SHEETS;STAGE;KARBON"`.
+For general Calligra build background (dependencies, platform notes), see
+upstream's own build documentation: https://community.kde.org/Calligra/Building
 
-## Contact info
+A Flatpak manifest (`org.mimoslinux.MimOffice.json`) is also provided for
+building and distributing MimOffice as a Flatpak.
 
-Developer and User mailing list: [calligra-devel@kde.org](mailto:calligra-devel@kde.org)
+## License
 
-Subscribing and list information: https://mail.kde.org/mailman/listinfo/calligra-devel
+MimOffice is free software, primarily under LGPL-2.0-or-later and
+GPL-2.0-or-later, inherited from upstream Calligra. See
+[COPYING](COPYING), [COPYING.LIB](COPYING.LIB), and the
+[LICENSES/](LICENSES/) directory for details, and [NOTICE](NOTICE) for
+how MimOffice's own additions are licensed.
 
-IRC channel for developers: [#calligra on Libera Chat](irc://irc.libera.chat/calligra)
+## Contact / issues
 
-Calligra Suite forums: http://forum.kde.org/calligra
+Report MimOffice-specific issues (branding, packaging, updates) at:
+https://github.com/MarcZX100/MimOffice/issues
 
-If you have questions about this README file or about Calligra Suite in general,
-please mail to the Calligra Suite mailing list: [calligra-devel@kde.org](mailto:calligra-devel@kde.org)
+For issues in the underlying application logic that also affect upstream
+Calligra, consider reporting to KDE's Calligra project as well:
+https://community.kde.org/Calligra

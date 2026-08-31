@@ -1,0 +1,29 @@
+name: Build Flatpak
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  flatpak:
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:kde-6.10
+      options: --privileged
+    steps:
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL || true
+          sudo docker image prune --all --force || true
+
+      - uses: actions/checkout@v4
+
+      - name: Build MimOffice Flatpak
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: mimoffice.flatpak
+          manifest-path: org.mimoslinux.MimOffice.json
+          cache-key: flatpak-builder-${{ github.sha }}

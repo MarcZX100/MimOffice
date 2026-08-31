@@ -16,16 +16,17 @@
 KAboutData *newKPresenterAboutData()
 {
     KAboutData *aboutData = new KAboutData(QStringLiteral("calligrastage"),
-                                           i18nc("application name", "Calligra Stage"),
+                                           i18nc("application name", "MimOffice Stage"),
                                            QLatin1String(CALLIGRA_VERSION_STRING),
                                            i18n("Presentation Tool"),
                                            KAboutLicense::LGPL,
-                                           i18n("Copyright 1998-%1, The Stage Team", QString::number(CALLIGRA_YEAR)),
+                                           i18n("Copyright 1998-%1 The Calligra Stage authors. MimOffice adaptation copyright 2026 XI14.", QString::number(CALLIGRA_YEAR)),
                                            QString(),
-                                           QStringLiteral("https://www.calligra.org/stage/"));
-    aboutData->setProductName("calligrastage"); // for bugs.kde.org
-    aboutData->setOrganizationDomain("kde.org");
+                                           QStringLiteral("https://mimoslinux.org"));
+    aboutData->setOrganizationDomain("mimoslinux.org");
     aboutData->setDesktopFileName(QStringLiteral("org.kde.calligra.stage"));
+    aboutData->setBugAddress(QByteArrayLiteral("https://github.com/MarcZX100/MimOffice/issues"));
+    aboutData->addCredit(i18n("XI14"), i18n("MimOffice rebrand and packaging"), QString(), QStringLiteral("https://mimoslinux.org"));
     aboutData->addAuthor(i18n("Carl Schwan"),
                          i18n("Maintainer/Port to Qt6"),
                          QStringLiteral("carl@carlschwan.eu"),

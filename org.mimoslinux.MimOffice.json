@@ -1,0 +1,334 @@
+{
+    "id": "org.mimoslinux.MimOffice",
+    "branch": "stable",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.10",
+    "sdk": "org.kde.Sdk",
+    "command": "calligralauncher",
+    "finish-args": [
+        "--device=dri",
+        "--own-name=org.kde.calligrasheets.*",
+        "--share=ipc",
+        "--share=network",
+        "--socket=fallback-x11",
+        "--socket=wayland"
+    ],
+    "modules": [
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./bootstrap.sh --prefix=/app --with-libraries=system",
+                "./b2 -j $FLATPAK_BUILDER_N_JOBS install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://archives.boost.io/release/1.89.0/source/boost_1_89_0.tar.bz2",
+                    "sha256": "85a33fa22621b4f314f8e85e1a5e2a9363d22e4f4992925d4bb3bc631b5a0c7a",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6845,
+                        "stable-only": true,
+                        "url-template": "https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "eigen",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.com/libeigen/eigen/-/archive/5.0.1/eigen-5.0.1.tar.bz2",
+                    "sha256": "e4de6b08f33fd8b8985d2f204381408c660bffa6170ac65b68ae1bd3cd575c0a",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 666,
+                        "stable-only": true,
+                        "url-template": "https://gitlab.com/libeigen/eigen/-/archive/$version/eigen-$version.tar.bz2"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libsecret",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dmanpage=false",
+                "-Dvapi=false",
+                "-Dgtk_doc=false",
+                "-Dintrospection=false"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.7.tar.xz",
+                    "sha256": "6b452e4750590a2b5617adc40026f28d2f4903de15f1250e1d1c40bfd68ed55e",
+                    "x-checker-data": {
+                        "type": "gnome",
+                        "name": "libsecret",
+                        "stable-only": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "qtkeychain",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/frankosterfeld/qtkeychain/archive/0.15.0.tar.gz",
+                    "sha256": "f4254dc8f0933b06d90672d683eab08ef770acd8336e44dfa030ce041dc2ca22",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 4138,
+                        "stable-only": true,
+                        "url-template": "https://github.com/frankosterfeld/qtkeychain/archive/$version.tar.gz"
+                    }
+                }
+            ],
+            "config-opts": [
+                "-DBUILD_WITH_QT6=ON",
+                "-DCMAKE_INSTALL_LIBDIR=/app/lib",
+                "-DLIB_INSTALL_DIR=/app/lib",
+                "-DBUILD_TRANSLATIONS=NO"
+            ]
+        },
+        {
+            "name": "kdiagram",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/kdiagram/3.0.1/kdiagram-3.0.1.tar.xz",
+                    "sha256": "4659b0c2cd9db18143f5abd9c806091c3aab6abc1a956bbf82815ab3d3189c6d",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 17734,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/kdiagram/$version/kdiagram-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "qca",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DBUILD_WITH_QT6=ON"
+            ],
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/qca/2.3.10/qca-2.3.10.tar.xz",
+                    "sha256": "1c5b722da93d559365719226bb121c726ec3c0dc4c67dea34f1e50e4e0d14a02",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 13606,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/qca/$version/qca-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "kirigami-addons",
+            "config-opts": [
+                "-DBUILD_TESTING=OFF",
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/kirigami-addons/kirigami-addons-1.12.1.tar.xz",
+                    "sha256": "c543a493ce5875f405fb1c9ff6d531060ed082cc6d710e56d46ac42d164207bb",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 242933,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/kirigami-addons/kirigami-addons-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "lcms2",
+            "config-opts": [
+                "-Dutils=FALSE"
+            ],
+            "cleanup": [
+                "/bin",
+                "/share"
+            ],
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.19.1/lcms2-2.19.1.tar.gz",
+                    "sha256": "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 9815,
+                        "stable-only": true,
+                        "url-template": "https://github.com/mm2/Little-CMS/releases/download/lcms$version/lcms2-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "librevenge",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--without-docs",
+                "--disable-tests",
+                "--disable-werror"
+            ],
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/libwpd/files/librevenge/librevenge-0.0.5/librevenge-0.0.5.tar.xz",
+                    "sha256": "106d0c44bb6408b1348b9e0465666fa83b816177665a22cd017e886c1aaeeb34",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 16780,
+                        "stable-only": true,
+                        "url-template": "https://sourceforge.net/projects/libwpd/files/librevenge/librevenge-$version/librevenge-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libodfgen",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--without-docs",
+                "--disable-test"
+            ],
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/libwpd/files/libodfgen/libodfgen-0.1.8/libodfgen-0.1.8.tar.xz",
+                    "sha256": "55200027fd46623b9bdddd38d275e7452d1b0ff8aeddcad6f9ae6dc25f610625",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 15131,
+                        "stable-only": true,
+                        "url-template": "https://sourceforge.net/projects/libwpd/files/libodfgen/libodfgen-$version/libodfgen-$version.tar.xz"
+                    }
+                },
+                {
+                    "type": "patch",
+                    "path": "includes.patch"
+                }
+            ]
+        },
+        {
+            "name": "libvisio",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--without-docs",
+                "--disable-tests"
+            ],
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://dev-www.libreoffice.org/src/libvisio/libvisio-0.1.11.tar.xz",
+                    "sha256": "2a6efd40b6d9dbcb70fba3be53112366882ba97b57151df3698dfa478c8d8dd3",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1757,
+                        "stable-only": true,
+                        "url-template": "https://dev-www.libreoffice.org/src/libvisio/libvisio-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libwpd",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--without-docs"
+            ],
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/libwpd/files/libwpd/libwpd-0.10.3/libwpd-0.10.3.tar.xz",
+                    "sha256": "2465b0b662fdc5d4e3bebcdc9a79027713fb629ca2bff04a3c9251fdec42dd09",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1693,
+                        "stable-only": true,
+                        "url-template": "https://sourceforge.net/projects/libwpd/files/libwpd/libwpd-$version/libwpd-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libwpg",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--without-docs"
+            ],
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/libwpg/libwpg-0.3.4.tar.xz",
+                    "sha256": "b55fda9440d1e070630eb2487d8b8697cf412c214a27caee9df69cec7c004de3",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1762,
+                        "stable-only": true,
+                        "url-template": "https://downloads.sourceforge.net/libwpg/libwpg-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libwps",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--without-docs"
+            ],
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/project/libwps/libwps/libwps-0.4.14/libwps-0.4.14.tar.xz",
+                    "sha256": "365b968e270e85a8469c6b160aa6af5619a4e6c995dbb04c1ecc1b4dd13e80de",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1763,
+                        "stable-only": true,
+                        "url-template": "https://downloads.sourceforge.net/project/libwps/libwps/libwps-$version/libwps-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "mimoffice",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DBUILD_TESTING=OFF",
+                "-DPRODUCTSET=WORDS;SHEETS;STAGE;KARBON"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
+                }
+            ]
+        }
+    ]
+}

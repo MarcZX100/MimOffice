@@ -23,16 +23,17 @@ static const char version[] = CALLIGRA_VERSION_STRING;
 static KAboutData *newAboutData()
 {
     auto aboutData = new KAboutData(QStringLiteral("calligrasheets"),
-                                    i18nc("application name", "Calligra Sheets"),
+                                    i18nc("application name", "MimOffice Sheets"),
                                     QStringLiteral(CALLIGRA_VERSION_STRING),
                                     i18n("Spreadsheet Application"),
                                     KAboutLicense::LGPL,
-                                    i18n("Copyright 1998-%1, The Calligra Sheets Team", QString::number(CALLIGRA_YEAR)),
+                                    i18n("Copyright 1998-%1 The Calligra Sheets authors. MimOffice adaptation copyright 2026 XI14.", QString::number(CALLIGRA_YEAR)),
                                     QString(),
-                                    QStringLiteral("https://www.calligra.org/sheets/"));
-    aboutData->setProductName("calligrasheets"); // for bugs.kde.org
-    aboutData->setOrganizationDomain("kde.org");
+                                    QStringLiteral("https://mimoslinux.org"));
+    aboutData->setOrganizationDomain("mimoslinux.org");
     aboutData->setDesktopFileName(QStringLiteral("org.kde.calligra.sheets"));
+    aboutData->setBugAddress(QByteArrayLiteral("https://github.com/MarcZX100/MimOffice/issues"));
+    aboutData->addCredit(i18n("XI14"), i18n("MimOffice rebrand and packaging"), QString(), QStringLiteral("https://mimoslinux.org"));
     aboutData->addAuthor(i18n("Carl Schwan"),
                          i18n("Maintainer/Port to Qt6"),
                          QStringLiteral("carl@carlschwan.eu"),

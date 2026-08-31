@@ -1,0 +1,41 @@
+MimOffice
+=========
+
+MimOffice is a rebranded, actively-synced fork of the KDE Calligra Suite
+(https://invent.kde.org/office/calligra, mirrored at
+https://github.com/KDE/calligra), maintained by XI14 as the office-suite
+sibling of the MimOS project (https://mimoslinux.org).
+
+MimOffice tracks Calligra's stable release branches and periodically merges
+upstream changes. Where MimOffice's source differs from upstream Calligra,
+those differences are limited to: application/product naming and branding
+strings, desktop entries and AppStream metadata, application icons and an
+optional icon theme, and packaging/CI configuration. The underlying
+application code is Calligra's, licensed as described below.
+
+License
+-------
+
+MimOffice, like Calligra, is licensed primarily under the GNU General
+Public License v2.0-or-later and the GNU Lesser General Public License
+v2.1-or-later, with individual files carrying their own SPDX license
+identifiers. See COPYING, COPYING.LIB, COPYING.DOC, COPYING-CMAKE-SCRIPTS,
+and the LICENSES/ directory (REUSE-compliant) for the full set of license
+texts that apply across the tree. These files are preserved unmodified
+from upstream Calligra.
+
+Files newly added for MimOffice (branding assets, CI/build configuration,
+and this notice) carry their own SPDX-FileCopyrightText headers
+attributing XI14, and are licensed as noted in each such file.
+
+Attribution
+-----------
+
+MimOffice is not affiliated with, endorsed by, or sponsored by KDE e.V. or
+The Document Foundation. "Calligra" and the KDE Community are credited as
+the original authors of the underlying application code; see the About
+dialog of each application, and the AUTHORS file, for the full
+contributor list carried over from upstream.
+
+See TRADEMARKS.md for how the MimOffice/MimOS name, mascot, and visual
+identity relate to the source code license above.

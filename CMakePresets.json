@@ -1,0 +1,23 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+    "configurePresets": [
+        {
+            "name": "mimoffice",
+            "displayName": "MimOffice (Words, Sheets, Stage, Karbon)",
+            "description": "Scoped build: only the apps MimOffice ships, excludes Braindump/Gemini/Okular and other upstream Calligra extras.",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "PRODUCTSET": "WORDS;SHEETS;STAGE;KARBON",
+                "BUILD_TESTING": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "mimoffice",
+            "configurePreset": "mimoffice",
+            "jobs": 0
+        }
+    ]
+}

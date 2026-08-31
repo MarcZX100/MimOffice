@@ -1,0 +1,88 @@
+name: Sync upstream Calligra
+
+on:
+  schedule:
+    # Every Monday 06:00 UTC.
+    - cron: "0 6 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out MimOffice
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/KDE/calligra.git
+
+      - name: Fetch upstream release branches
+        run: git fetch upstream 'refs/heads/release/*:refs/remotes/upstream/release/*'
+
+      - name: Resolve latest stable release branch
+        id: upstream
+        run: |
+          latest=$(git branch -r --list 'upstream/release/*' \
+            | sed 's#.*upstream/release/##' \
+            | sort -t. -k1,1n -k2,2n \
+            | tail -1)
+          echo "branch=release/${latest}" >> "$GITHUB_OUTPUT"
+          echo "Latest upstream release branch: release/${latest}"
+
+      - name: Fast-forward upstream-sync
+        run: |
+          git fetch upstream "${{ steps.upstream.outputs.branch }}"
+          git branch -f upstream-sync FETCH_HEAD
+
+      - name: Attempt merge into a sync branch
+        id: merge
+        run: |
+          sync_branch="sync/${{ steps.upstream.outputs.branch }}-$(date +%Y%m%d)"
+          echo "sync_branch=${sync_branch}" >> "$GITHUB_OUTPUT"
+          git checkout -b "${sync_branch}" main
+          git config user.name "mimoffice-sync-bot"
+          git config user.email "noreply@mimoslinux.org"
+          if git merge upstream-sync --no-edit; then
+            echo "clean=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "clean=false" >> "$GITHUB_OUTPUT"
+            git add -A
+            git commit -m "Merge ${{ steps.upstream.outputs.branch }} (with conflicts, needs review)" --no-verify || true
+          fi
+          git push origin "${sync_branch}"
+
+      - name: Configure build (sanity check)
+        id: build
+        if: steps.merge.outputs.clean == 'true'
+        continue-on-error: true
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake extra-cmake-modules qt6-base-dev
+          cmake -S . -B build -DPRODUCTSET="WORDS;SHEETS;STAGE;KARBON" -DBUILD_TESTING=OFF
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ steps.merge.outputs.sync_branch }}
+          base: main
+          title: "Sync upstream ${{ steps.upstream.outputs.branch }}"
+          labels: |
+            upstream-sync
+            ${{ steps.merge.outputs.clean == 'false' && 'sync-needs-review' || '' }}
+            ${{ steps.build.outcome == 'failure' && 'sync-needs-review' || '' }}
+          body: |
+            Automated sync from upstream Calligra `${{ steps.upstream.outputs.branch }}`.
+
+            - Clean merge: `${{ steps.merge.outputs.clean }}`
+            - Configure sanity check: `${{ steps.build.outcome || 'skipped' }}`
+
+            If the merge had conflicts, or the configure step failed, resolve
+            before merging. Otherwise this should be safe to merge once CI is
+            green.

@@ -17,15 +17,16 @@
 KAboutData *newKarbonAboutData()
 {
     KAboutData *aboutData = new KAboutData(QStringLiteral("karbon"),
-                                           i18n("Karbon"),
+                                           i18n("MimOffice Karbon"),
                                            QStringLiteral(CALLIGRA_VERSION_STRING),
                                            i18n("A Vector Graphics Drawing Application."),
                                            KAboutLicense::LGPL,
-                                           i18n("(c) 2001-%1, The Karbon Developers", QString::number(CALLIGRA_YEAR)),
-                                           QStringLiteral("https://www.calligra.org/karbon/"));
-    aboutData->setProductName("karbon"); // for bugs.kde.org
-    aboutData->setOrganizationDomain("kde.org");
+                                           i18n("(c) 2001-%1 The Karbon developers. MimOffice adaptation copyright 2026 XI14.", QString::number(CALLIGRA_YEAR)),
+                                           QStringLiteral("https://mimoslinux.org"));
+    aboutData->setOrganizationDomain("mimoslinux.org");
     aboutData->setDesktopFileName(QStringLiteral("org.kde.calligra.karbon"));
+    aboutData->setBugAddress(QByteArrayLiteral("https://github.com/MarcZX100/MimOffice/issues"));
+    aboutData->addCredit(i18n("XI14"), i18n("MimOffice rebrand and packaging"), QString(), QStringLiteral("https://mimoslinux.org"));
     aboutData->addAuthor(i18n("Anthony Fieroni"), i18n("Maintainer"), QString());
     aboutData->addAuthor(i18n("Carl Schwan"),
                          i18n("Port to Qt6"),

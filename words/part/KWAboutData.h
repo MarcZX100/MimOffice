@@ -15,16 +15,17 @@
 KAboutData *newWordsAboutData()
 {
     auto aboutData = new KAboutData(QStringLiteral("calligrawords"),
-                                    i18nc("application name", "Calligra Words"),
+                                    i18nc("application name", "MimOffice Words"),
                                     QStringLiteral(CALLIGRA_VERSION_STRING),
                                     i18n("Word processor"),
                                     KAboutLicense::LGPL,
-                                    i18n("Copyright 1998-%1, The Words Team", QString::number(CALLIGRA_YEAR)),
+                                    i18n("Copyright 1998-%1 The Calligra Words authors. MimOffice adaptation copyright 2026 XI14.", QString::number(CALLIGRA_YEAR)),
                                     QString(),
-                                    QStringLiteral("https://www.calligra.org/words/"));
-    aboutData->setProductName("calligrawords"); // for bugs.kde.org
-    aboutData->setOrganizationDomain("kde.org");
+                                    QStringLiteral("https://mimoslinux.org"));
+    aboutData->setOrganizationDomain("mimoslinux.org");
     aboutData->setDesktopFileName(QStringLiteral("org.kde.calligra.words"));
+    aboutData->setBugAddress(QByteArrayLiteral("https://github.com/MarcZX100/MimOffice/issues"));
+    aboutData->addCredit(i18n("XI14"), i18n("MimOffice rebrand and packaging"), QString(), QStringLiteral("https://mimoslinux.org"));
     aboutData->addAuthor(i18n("Carl Schwan"),
                          i18n("Co Maintainer/Port to Qt6"),
                          QStringLiteral("carl@carlschwan.eu"),

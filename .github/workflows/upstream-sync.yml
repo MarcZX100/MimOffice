@@ -33,6 +33,10 @@ jobs:
             | sed 's#.*upstream/release/##' \
             | sort -t. -k1,1n -k2,2n \
             | tail -1)
+          if [ -z "${latest}" ]; then
+            echo "::error::No upstream 'release/*' branches found; cannot resolve latest stable release branch." >&2
+            exit 1
+          fi
           echo "branch=release/${latest}" >> "$GITHUB_OUTPUT"
           echo "Latest upstream release branch: release/${latest}"
 

@@ -7,7 +7,10 @@
     "command": "calligralauncher",
     "finish-args": [
         "--device=dri",
-        "--own-name=org.kde.calligrasheets.*",
+        "--own-name=org.mimoslinux.calligrawords.*",
+        "--own-name=org.mimoslinux.calligrasheets.*",
+        "--own-name=org.mimoslinux.calligrastage.*",
+        "--own-name=org.mimoslinux.karbon.*",
         "--share=ipc",
         "--share=network",
         "--socket=fallback-x11",

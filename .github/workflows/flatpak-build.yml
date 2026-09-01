@@ -14,11 +14,6 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:kde-6.10
       options: --privileged
     steps:
-      - name: Free up disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL || true
-          sudo docker image prune --all --force || true
-
       - uses: actions/checkout@v4
 
       - name: Build MimOffice Flatpak
@@ -27,3 +22,45 @@ jobs:
           bundle: mimoffice.flatpak
           manifest-path: org.mimoslinux.MimOffice.json
           cache-key: flatpak-builder-${{ github.sha }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimoffice-flatpak
+          path: mimoffice.flatpak
+          retention-days: 14
+
+  release:
+    needs: flatpak
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mimoffice-flatpak
+
+      - name: Move "latest" tag to this commit
+        run: |
+          git tag -f latest
+          git push origin refs/tags/latest --force
+
+      - name: Publish rolling "latest" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: MimOffice (latest build)
+          body: |
+            Automatically built from the latest `main` commit (${{ github.sha }}).
+
+            ## Install
+            1. Download `mimoffice.flatpak` below.
+            2. `flatpak install --user mimoffice.flatpak` (or double-click it in GNOME Software / KDE Discover).
+            3. Run with `flatpak run org.mimoslinux.MimOffice`.
+          files: mimoffice.flatpak
+          make_latest: true
+          prerelease: false

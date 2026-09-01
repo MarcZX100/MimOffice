@@ -28,6 +28,21 @@ MimOffice ships a scoped subset of upstream Calligra (Words, Sheets,
 Stage, Karbon) rather than the full upstream application set; see
 `CMakePresets.json` and `CalligraProducts.cmake`.
 
+## Installing
+
+The easiest way to install MimOffice is via the prebuilt Flatpak from the
+[latest GitHub release](https://github.com/MarcZX100/MimOffice/releases/latest),
+which is rebuilt automatically from every `main` commit:
+
+```sh
+# Download mimoffice.flatpak from the release page above, then:
+flatpak install --user mimoffice.flatpak
+flatpak run org.mimoslinux.MimOffice
+```
+
+You can also just double-click the downloaded `mimoffice.flatpak` file in a
+file manager to install it through GNOME Software or KDE Discover.
+
 ## Building and running
 
 MimOffice is built on the [KDE Frameworks](https://develop.kde.org/products/frameworks),

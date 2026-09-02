@@ -11,12 +11,29 @@
                 "PRODUCTSET": "WORDS;SHEETS;STAGE;KARBON",
                 "BUILD_TESTING": "ON"
             }
+        },
+        {
+            "name": "mimoffice-package",
+            "displayName": "MimOffice (packaging build)",
+            "description": "Same productset as the mimoffice preset, configured for native .deb/AppImage packaging: optimized build, FHS install prefix, no tests.",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "PRODUCTSET": "WORDS;SHEETS;STAGE;KARBON",
+                "BUILD_TESTING": "OFF",
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_INSTALL_PREFIX": "/usr"
+            }
         }
     ],
     "buildPresets": [
         {
             "name": "mimoffice",
             "configurePreset": "mimoffice",
+            "jobs": 0
+        },
+        {
+            "name": "mimoffice-package",
+            "configurePreset": "mimoffice-package",
             "jobs": 0
         }
     ]

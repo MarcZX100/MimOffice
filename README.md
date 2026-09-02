@@ -30,9 +30,11 @@ Stage, Karbon) rather than the full upstream application set; see
 
 ## Installing
 
-The easiest way to install MimOffice is via the prebuilt Flatpak from the
+MimOffice publishes prebuilt packages on the
 [latest GitHub release](https://github.com/MarcZX100/MimOffice/releases/latest),
-which is rebuilt automatically from every `main` commit:
+rebuilt automatically from every `main` commit, in three formats:
+
+**Flatpak** (recommended, works on any distro):
 
 ```sh
 # Download mimoffice.flatpak from the release page above, then:
@@ -42,6 +44,21 @@ flatpak run org.mimoslinux.MimOffice
 
 You can also just double-click the downloaded `mimoffice.flatpak` file in a
 file manager to install it through GNOME Software or KDE Discover.
+
+**.deb** (Debian, Ubuntu, and MimOS):
+
+```sh
+# Download mimoffice_*_amd64.deb from the release page above, then:
+sudo apt install ./mimoffice_*_amd64.deb
+```
+
+**AppImage** (portable, no install needed):
+
+```sh
+# Download MimOffice-x86_64.AppImage from the release page above, then:
+chmod +x MimOffice-x86_64.AppImage
+./MimOffice-x86_64.AppImage
+```
 
 ## Building and running
 

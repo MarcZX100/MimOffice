@@ -1015,3 +1015,19 @@ file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+
+# Native .deb packaging (see org.mimoslinux.MimOffice.json for the Flatpak manifest, and
+# .github/workflows/flatpak-build.yml for the AppImage assembled in CI from this same
+# `cmake --install` tree). Inert for normal dev/Flatpak builds; only used when a
+# `package`/`cpack` target is invoked.
+set(CPACK_PACKAGE_NAME "mimoffice")
+set(CPACK_PACKAGE_VERSION "${RELEASE_SERVICE_VERSION}")
+set(CPACK_PACKAGE_VENDOR "MimOS")
+set(CPACK_PACKAGE_CONTACT "MimOS <marczxrr@gmail.com>")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "MimOffice office suite (Words, Sheets, Stage, Karbon)")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/MarcZX100/MimOffice")
+set(CPACK_DEBIAN_PACKAGE_SECTION "editors")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")
+set(CPACK_GENERATOR "DEB")
+include(CPack)

@@ -30,8 +30,104 @@ jobs:
           path: mimoffice.flatpak
           retention-days: 14
 
+  deb:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            extra-cmake-modules ninja-build build-essential dpkg-dev perl zlib1g-dev \
+            qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev \
+            libkf6archive-dev libkf6completion-dev libkf6config-dev libkf6configwidgets-dev \
+            libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev \
+            libkf6iconthemes-dev libkf6itemviews-dev libkf6jobwidgets-dev libkf6kcmutils-dev \
+            libkf6kio-dev libkf6notifications-dev libkf6notifyconfig-dev libkf6sonnet-dev \
+            libkf6textwidgets-dev libkf6widgetsaddons-dev libkf6windowsystem-dev libkf6xmlgui-dev \
+            kirigami-addons-dev \
+            libboost-dev qtkeychain-qt6-dev libkchart6-dev libqca-qt6-2-dev liblcms2-dev \
+            librevenge-dev libodfgen-dev libvisio-dev libwpd-dev libwpg-dev libwps-dev \
+            libpoppler-qt6-dev libetonyek-dev libcdr-dev libmspub-dev \
+            libeigen3-dev libsecret-1-dev libgsl-dev libssl-dev
+
+      - name: Configure
+        run: cmake --preset mimoffice-package
+
+      - name: Build
+        run: cmake --build --preset mimoffice-package
+
+      - name: Package .deb
+        run: cd build && cpack -G DEB
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimoffice-deb
+          path: build/*.deb
+          retention-days: 14
+
+  appimage:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            extra-cmake-modules ninja-build build-essential dpkg-dev perl zlib1g-dev \
+            qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev \
+            libkf6archive-dev libkf6completion-dev libkf6config-dev libkf6configwidgets-dev \
+            libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev \
+            libkf6iconthemes-dev libkf6itemviews-dev libkf6jobwidgets-dev libkf6kcmutils-dev \
+            libkf6kio-dev libkf6notifications-dev libkf6notifyconfig-dev libkf6sonnet-dev \
+            libkf6textwidgets-dev libkf6widgetsaddons-dev libkf6windowsystem-dev libkf6xmlgui-dev \
+            kirigami-addons-dev \
+            libboost-dev qtkeychain-qt6-dev libkchart6-dev libqca-qt6-2-dev liblcms2-dev \
+            librevenge-dev libodfgen-dev libvisio-dev libwpd-dev libwpg-dev libwps-dev \
+            libpoppler-qt6-dev libetonyek-dev libcdr-dev libmspub-dev \
+            libeigen3-dev libsecret-1-dev libgsl-dev libssl-dev \
+            fuse
+
+      - name: Configure
+        run: cmake --preset mimoffice-package
+
+      - name: Build
+        run: cmake --build --preset mimoffice-package
+
+      - name: Install into AppDir
+        run: cmake --install build --prefix "$PWD/AppDir/usr"
+
+      - name: Fetch linuxdeploy
+        run: |
+          curl -L -o linuxdeploy-x86_64.AppImage \
+            https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          curl -L -o linuxdeploy-plugin-qt-x86_64.AppImage \
+            https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
+
+      - name: Build AppImage
+        run: |
+          export QMAKE=/usr/lib/qt6/bin/qmake
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir \
+            --executable AppDir/usr/bin/calligralauncher \
+            --desktop-file AppDir/usr/share/applications/org.kde.calligra.desktop \
+            --icon-file words/app/org.kde.calligra.words.svg \
+            --icon-filename org.kde.calligra.words \
+            --plugin qt --output appimage
+          mv MimOffice*.AppImage MimOffice-x86_64.AppImage
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimoffice-appimage
+          path: MimOffice-x86_64.AppImage
+          retention-days: 14
+
   release:
-    needs: flatpak
+    needs: [flatpak, deb, appimage]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
@@ -39,10 +135,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download build artifact
+      - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: mimoffice-flatpak
+          pattern: mimoffice-*
+          merge-multiple: true
 
       - name: Move "latest" tag to this commit
         run: |
@@ -58,9 +155,22 @@ jobs:
             Automatically built from the latest `main` commit (${{ github.sha }}).
 
             ## Install
+
+            **Flatpak** (recommended, works on any distro):
             1. Download `mimoffice.flatpak` below.
             2. `flatpak install --user mimoffice.flatpak` (or double-click it in GNOME Software / KDE Discover).
             3. Run with `flatpak run org.mimoslinux.MimOffice`.
-          files: mimoffice.flatpak
+
+            **.deb** (Debian, Ubuntu, and MimOS):
+            1. Download `mimoffice_*_amd64.deb` below.
+            2. `sudo apt install ./mimoffice_*_amd64.deb` (or `sudo dpkg -i` followed by `sudo apt --fix-broken install` to pull in dependencies).
+
+            **AppImage** (portable, no install needed):
+            1. Download `MimOffice-x86_64.AppImage` below.
+            2. `chmod +x MimOffice-x86_64.AppImage && ./MimOffice-x86_64.AppImage`.
+          files: |
+            mimoffice.flatpak
+            *.deb
+            MimOffice-x86_64.AppImage
           make_latest: true
           prerelease: false

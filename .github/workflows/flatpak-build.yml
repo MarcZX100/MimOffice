@@ -55,7 +55,7 @@ jobs:
             extra-cmake-modules cmake ninja-build build-essential dpkg-dev perl zlib1g-dev \
             qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev \
             libkf6archive-dev libkf6completion-dev libkf6config-dev libkf6configwidgets-dev \
-            libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev \
+            libkf6coreaddons-dev libkf6crash-dev libkf6dbusaddons-dev libkf6guiaddons-dev libkf6i18n-dev \
             libkf6iconthemes-dev libkf6itemviews-dev libkf6jobwidgets-dev libkf6kcmutils-dev \
             libkf6kio-dev libkf6notifications-dev libkf6notifyconfig-dev libkf6sonnet-dev \
             libkf6textwidgets-dev libkf6widgetsaddons-dev libkf6windowsystem-dev libkf6xmlgui-dev \
@@ -111,7 +111,7 @@ jobs:
             perl-interpreter zlib-devel \
             qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtsvg-devel qt6-qttools-devel \
             kf6-karchive-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel \
-            kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kguiaddons-devel kf6-ki18n-devel \
+            kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel \
             kf6-kiconthemes-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kcmutils-devel \
             kf6-kio-devel kf6-knotifications-devel kf6-knotifyconfig-devel kf6-sonnet-devel \
             kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel \
@@ -161,7 +161,7 @@ jobs:
             extra-cmake-modules cmake ninja-build build-essential perl zlib1g-dev \
             qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev \
             libkf6archive-dev libkf6completion-dev libkf6config-dev libkf6configwidgets-dev \
-            libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev \
+            libkf6coreaddons-dev libkf6crash-dev libkf6dbusaddons-dev libkf6guiaddons-dev libkf6i18n-dev \
             libkf6iconthemes-dev libkf6itemviews-dev libkf6jobwidgets-dev libkf6kcmutils-dev \
             libkf6kio-dev libkf6notifications-dev libkf6notifyconfig-dev libkf6sonnet-dev \
             libkf6textwidgets-dev libkf6widgetsaddons-dev libkf6windowsystem-dev libkf6xmlgui-dev \

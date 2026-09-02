@@ -33,3 +33,4 @@ BROWSE
 .clangd
 .cache
 /cmake-build*
+/.flatpak-builder

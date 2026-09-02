@@ -1,7 +1,9 @@
 # SPDX-FileCopyrightText: 2024 Carl Schwan <carl@carlschwan.eu>
 # SPDX-License-Identifier: BSD-3-Clause
 
-add_executable(calligralauncher main.cpp helper.cpp helper.h)
+add_executable(calligralauncher main.cpp helper.cpp helper.h ../libs/main/MimOSTheme.cpp)
+
+target_include_directories(calligralauncher PRIVATE ${CMAKE_SOURCE_DIR}/libs/main)
 
 qt_add_qml_module(calligralauncher
     URI org.kde.calligra

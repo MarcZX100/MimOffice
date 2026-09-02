@@ -15,6 +15,7 @@ include_directories( ${KOMAIN_INCLUDES})
 set(komain_LIB_SRCS
     KoAutoSaveRecoveryDialog.cpp
     KoApplication.cpp
+    MimOSTheme.cpp
     KoComponentData.cpp
     KoDockerManager.cpp
     KoDocument.cpp

@@ -11,6 +11,7 @@
 #include <QUrl>
 
 #include "calligra-version.h"
+#include "MimOSTheme.h"
 #include <KAboutData>
 #include <KCrash>
 #include <KLocalizedContext>
@@ -26,6 +27,8 @@ using namespace Qt::StringLiterals;
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    MimOSTheme::apply(&app);
 
     // Default to org.kde.desktop style unless the user forces another style
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {

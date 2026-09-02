@@ -23,6 +23,7 @@
 #include "KoMainWindow.h"
 #include "KoPart.h"
 #include "KoPrintJob.h"
+#include "MimOSTheme.h"
 #include <KoComponentData.h>
 #include <KoConfig.h>
 #include <KoDpi.h>
@@ -186,6 +187,8 @@ BOOL isWow64()
 
 bool KoApplication::start()
 {
+    MimOSTheme::apply(this);
+
     KAboutData aboutData = KAboutData::applicationData();
     // process commandline parameters
     QCommandLineParser parser;

@@ -1,0 +1,77 @@
+name: mimoffice
+base: core24
+version: '26.08.0'
+summary: MimOffice office suite — Words, Sheets, Stage, Karbon
+description: |
+  MimOffice is a KDE Frameworks-based office suite forked from Calligra,
+  bundling Words (word processor), Sheets (spreadsheet), Stage
+  (presentations), and Karbon (vector graphics).
+license: LGPL-2.0-or-later AND GPL-2.0-or-later
+grade: stable
+confinement: strict
+
+apps:
+  mimoffice:
+    command: usr/bin/calligralauncher
+    common-id: org.kde.calligra.desktop
+    desktop: usr/share/applications/org.kde.calligra.desktop
+    extensions: [kde-neon-6]
+    plugs:
+      - home
+      - removable-media
+
+parts:
+  mimoffice:
+    plugin: cmake
+    source: .
+    cmake-generator: Ninja
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DPRODUCTSET=WORDS;SHEETS;STAGE;KARBON
+      - -DBUILD_TESTING=OFF
+    build-packages:
+      - extra-cmake-modules
+      - qt6-declarative-dev
+      - qt6-svg-dev
+      - qt6-tools-dev
+      - libkf6archive-dev
+      - libkf6completion-dev
+      - libkf6config-dev
+      - libkf6configwidgets-dev
+      - libkf6coreaddons-dev
+      - libkf6crash-dev
+      - libkf6guiaddons-dev
+      - libkf6i18n-dev
+      - libkf6iconthemes-dev
+      - libkf6itemviews-dev
+      - libkf6jobwidgets-dev
+      - libkf6kcmutils-dev
+      - libkf6kio-dev
+      - libkf6notifications-dev
+      - libkf6notifyconfig-dev
+      - libkf6sonnet-dev
+      - libkf6textwidgets-dev
+      - libkf6widgetsaddons-dev
+      - libkf6windowsystem-dev
+      - libkf6xmlgui-dev
+      - kirigami-addons-dev
+      - libboost-dev
+      - qtkeychain-qt6-dev
+      - libkchart6-dev
+      - libqca-qt6-2-dev
+      - liblcms2-dev
+      - librevenge-dev
+      - libodfgen-dev
+      - libvisio-dev
+      - libwpd-dev
+      - libwpg-dev
+      - libwps-dev
+      - libpoppler-qt6-dev
+      - libetonyek-dev
+      - libcdr-dev
+      - libmspub-dev
+      - libeigen3-dev
+      - libsecret-1-dev
+      - libgsl-dev
+      - libssl-dev

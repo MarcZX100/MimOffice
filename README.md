@@ -32,7 +32,7 @@ Stage, Karbon) rather than the full upstream application set; see
 
 MimOffice publishes prebuilt packages on the
 [latest GitHub release](https://github.com/MarcZX100/MimOffice/releases/latest),
-rebuilt automatically from every `main` commit, in three formats:
+rebuilt automatically from every `main` commit, in six formats:
 
 **Flatpak** (recommended, works on any distro):
 
@@ -52,12 +52,33 @@ file manager to install it through GNOME Software or KDE Discover.
 sudo apt install ./mimoffice_*_amd64.deb
 ```
 
+**.rpm** (Fedora, openSUSE, RHEL):
+
+```sh
+# Download mimoffice-*.rpm from the release page above, then:
+sudo dnf install ./mimoffice-*.rpm   # or: sudo zypper install ./mimoffice-*.rpm
+```
+
+**Snap** (any distro with snapd):
+
+```sh
+# Download mimoffice_*.snap from the release page above, then:
+sudo snap install --dangerous mimoffice_*.snap
+```
+
 **AppImage** (portable, no install needed):
 
 ```sh
 # Download MimOffice-x86_64.AppImage from the release page above, then:
 chmod +x MimOffice-x86_64.AppImage
 ./MimOffice-x86_64.AppImage
+```
+
+**Tarball** (manual/system-wide install, any distro):
+
+```sh
+# Download mimoffice-*-Linux.tar.gz from the release page above, then:
+sudo tar -xzf mimoffice-*-Linux.tar.gz -C /
 ```
 
 ## Building and running

@@ -30,36 +30,16 @@ parts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DPRODUCTSET=WORDS;SHEETS;STAGE;KARBON
       - -DBUILD_TESTING=OFF
+    # The kde-neon-6 extension pulls in the kf6-core24-sdk and kde-qt6-core24-sdk build-snaps,
+    # which already provide ECM, Qt6, and every KF6 framework at build time (and their runtime
+    # counterparts via the kf6-core24 content snap) — so only genuine third-party libs that
+    # those SDKs don't cover need to be listed here. kdiagram/qca are left out: they're
+    # optional (CalligraProducts.cmake features) and not reliably named on core24, so the
+    # build just skips those two features rather than failing outright.
     build-packages:
-      - extra-cmake-modules
-      - qt6-declarative-dev
-      - qt6-svg-dev
-      - qt6-tools-dev
-      - libkf6archive-dev
-      - libkf6completion-dev
-      - libkf6config-dev
-      - libkf6configwidgets-dev
-      - libkf6coreaddons-dev
-      - libkf6crash-dev
-      - libkf6guiaddons-dev
-      - libkf6i18n-dev
-      - libkf6iconthemes-dev
-      - libkf6itemviews-dev
-      - libkf6jobwidgets-dev
-      - libkf6kcmutils-dev
-      - libkf6kio-dev
-      - libkf6notifications-dev
-      - libkf6notifyconfig-dev
-      - libkf6sonnet-dev
-      - libkf6textwidgets-dev
-      - libkf6widgetsaddons-dev
-      - libkf6windowsystem-dev
-      - libkf6xmlgui-dev
       - kirigami-addons-dev
       - libboost-dev
       - qtkeychain-qt6-dev
-      - libkchart6-dev
-      - libqca-qt6-2-dev
       - liblcms2-dev
       - librevenge-dev
       - libodfgen-dev
